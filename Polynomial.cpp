@@ -4,19 +4,49 @@
 #include<string>
 #include<vector>
 #include"Polynomial.h"
+#include"control.h"
 
 using namespace std;
 
+extern vector<Polynomial> polynomial;
+
 void Polynomial::input(){
     this->factor.clear();
+    cout<<"Please input the length of the polynomial:";
     int n;
     cin>>n;
-    int tmp_factor;
+    cout<<"Please input the factors of the polynomial:";
+
+    double tmp_factor;
     for(int i=0;i<n;i++){
         cin>>tmp_factor;
         this->factor.push_back(tmp_factor);
     }
-    cin>>this->name;
+    cout<<"please input the name of the polynomial:";
+    while(1){
+        cin>>this->name;
+        int i = 0;
+        for(; i < name.length(); i++){
+            if((name[i]>='a'&&name[i]<='z')||(name[i]>='A'&&name[i]<='Z'))continue;
+            else break;
+        }
+        if(i==name.length()){
+            int jud=1;
+            for(int i=0; i<polynomial.size();i++){
+                if(polynomial[i].name==this->name){
+                    cout<<"NAME EXISTED,please input again:";
+                    jud=0;
+                    break;
+                }
+            }
+            if(jud==1) break;
+            else continue;
+        }
+        else {
+            cout<<"INVALID NAME,please input again:";
+            continue;
+        }
+    }
 }
     
 
@@ -99,7 +129,7 @@ void Polynomial::output(){//output one specific polynomial
 
         }
     }
-
+    cout<<endl;
 
 }
 
