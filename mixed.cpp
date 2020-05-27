@@ -1,6 +1,7 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include<stack>
 #include"mixed.h"
 #include"control.h"
 #include"Polynomial.h"
@@ -98,8 +99,75 @@ int judge(string exp){
 }
 
 string suffix_exp(string exp){
-    string a="a";
-    return a;
+    int len = exp.length();
+    string n_exp;
+    stack<string> operate;
+    //string tmp;
+    for(int i = 0;i<len;i++){
+        if((exp[i]>='A'&&exp[i]<='Z')||(exp[i]>='a'&&exp[i]<='z'))n_exp+=exp[i];
+        else if(exp[i]=='('){
+            string tmp; 
+            tmp+=exp[i];
+            operate.push(tmp);
+        }
+        else if(exp[i]=='+'){
+            while(!operate.empty()&&operate.top()!="("){
+                string tmp;
+                tmp=operate.top();
+                n_exp+=tmp;
+                operate.pop();
+            }
+            string tmp;
+            tmp+=exp[i];
+            operate.push(tmp);
+        }
+        else if(exp[i]=='*'){
+            while(!operate.empty()&&operate.top()!="("&&operate.top()!="+"){
+                string tmp;
+                tmp = operate.top();
+                n_exp+=tmp;
+                operate.pop();
+            }
+            string tmp;
+            tmp+=exp[i];
+            operate.push(tmp);
+        }
+        else if(exp[i]=='$'){
+            string tmp;
+            tmp+=exp[i];
+            int j=i+1;
+            while(exp[j]!=']'){
+                tmp+=exp[j];
+                j++;
+            }
+            while(!operate.empty()&&operate.top()!="("&&operate.top()!="+"&&operate.top()!="*"){
+                string tmp;
+                tmp = operate.top();
+                n_exp+=tmp;
+                operate.pop();
+            }
+            operate.push(tmp);
+            i=j;
+        
+        }
+        else if(exp[i]=='!'){
+            string tmp;
+            tmp+=exp[i];
+            
+            operate.push(tmp);
+        }
+        else if(exp[i]==')'){
+            while(!operate.empty()&&operate.top()!="("){
+                string tmp;
+                tmp = operate.top();
+                n_exp+=tmp;
+                operate.pop();
+            }
+            operate.pop();
+        }
+
+    }
+    return n_exp;
 }
 
 void value(string exp){
