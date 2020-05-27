@@ -5,12 +5,11 @@
 
 using namespace std;
 
-Polynomial::Polynomial(vector<double> nums, string str){
-    factor = nums;
-    name = str;
-}
+
 
 Polynomial Polynomial::plus(Polynomial operand1, Polynomial operand2){
+    Polynomial new_poly;
+    
     return operand1;
 }
 
