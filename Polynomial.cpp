@@ -10,6 +10,11 @@ using namespace std;
 
 extern vector<Polynomial> polynomial;
 
+
+Polynomial::Polynomial(double a0){
+    this->factor.push_back(a0);
+}
+
 void Polynomial::input(){
     this->factor.clear();
     cout<<"Please input the length of the polynomial:";
@@ -154,7 +159,7 @@ Polynomial Polynomial::plus(Polynomial operand1, Polynomial operand2){
     return new_poly;
 }
 
-Polynomial Polynomial::devirate(Polynomial operand){
+Polynomial Polynomial::derivate(Polynomial operand){
     Polynomial new_poly;
     int r = operand.factor.size();
     for(int i=0;i<r-1;i++){

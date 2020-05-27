@@ -25,7 +25,7 @@ void mixed_control(){
         }
         else{
             string suffix_expr=suffix_exp(exp);
-            value(suffix_expr);
+            value(suffix_expr,exp);
             cout<<"SUCCEED! Do you want to continue calculation?(y/n)";
             string tmp;
             cin>>tmp;
@@ -105,7 +105,10 @@ string suffix_exp(string exp){
     //string tmp;
     for(int i = 0;i<len;i++){
         if((exp[i]>='A'&&exp[i]<='Z')||(exp[i]>='a'&&exp[i]<='z'))n_exp+=exp[i];
-        else if(exp[i]=='('){
+        else{
+            n_exp+=' ';
+        }
+        if(exp[i]=='('){
             string tmp; 
             tmp+=exp[i];
             operate.push(tmp);
@@ -170,7 +173,126 @@ string suffix_exp(string exp){
     return n_exp;
 }
 
-void value(string exp){
+void value(string exp ,string orig){
+    int len = exp.length();
+    string operand,operate;
+    Polynomial operand1,operand2;
+    stack<Polynomial> operands;
+    for(int i = 0; i < len;i++){
+        if((exp[i]>='A'&&exp[i]<='Z')||(exp[i]>='a'&&exp[i]<='z')){
+            operand+=exp[i];
+        }
+        else if(operand!="\0"){
+            Polynomial tmp;
+            for(int i=0;i<polynomial.size();i++){
+                if(polynomial[i].name==operand)tmp = polynomial[i];
+            }
+            
+            operands.push(tmp);
+            operand="\0";
+
+        }
+        else if(exp[i]=='+'||exp[i]=='*'||exp[i]=='!'||exp[i]=='$'){
+            if(exp[i]=='+'){
+                operand1=operands.top();
+                operands.pop();
+                operand2=operands.top();
+                operands.pop();
+                
+                
+                Polynomial ans = operand1.plus(operand1,operand2);
+                operands.push(ans);
+            }
+            else if(exp[i]=='*'){
+                operand1=operands.top();
+                operands.pop();
+                operand2=operands.top();
+                operands.pop();
+
+                Polynomial ans = operand1.multiplicate(operand1,operand2);
+                operands.push(ans);
+            }
+            else if(exp[i]=='!'){
+                operand1=operands.top();
+                operands.pop();
+
+                Polynomial ans = operand1.derivate(operand1);
+                operands.push(ans);
+
+            }
+            else if(exp[i]=='$'){
+                string lower,upper;
+                double lower_limit=0,upper_limit=0;
+
+                i=i+2;
+                while(exp[i]!=','){
+                    lower+=exp[i];
+                    i++;
+                }
+                i++;
+                while(exp[i]!=']'){
+                    upper+=exp[i];
+                    i++;
+                }
+
+                int i = 0;
+                for(;i<lower.length();i++){
+                    if(lower[i]!='.'){
+                        int low= lower[i]-48;
+                        lower_limit=lower_limit*10+low;
+                    }
+                    else{
+                        break;
+                    }
+                }
+                int tag= i;
+                for(i=i+1;i<lower.length();i++){
+                    int low =lower[i]-48;
+
+                    for(int k = 0;k<i-tag;k++){
+                        low=low*0.1;
+                    }
+                    lower_limit=lower_limit+low;
+                }
+
+                int j = 0;
+                for(;j<upper.length();j++){
+                    if(upper[j]!='.'){
+                        int up= upper[j]-48;
+                       
+                        upper_limit=upper_limit*10+up;
+                    }
+                    else{
+                        break;
+                    }
+                }
+                tag= j;
+                for(j=j+1;j<upper.length();i++){
+                    int up =upper[i]-48;
+
+                    for(int k = 0;k<i-tag;k++){
+                        up=up*0.1;
+                    }
+                    upper_limit=upper_limit+up;
+                }     
+
+                operand1= operands.top();
+                operands.pop();
+
+                double ans = operand1.integral(lower_limit,upper_limit);
+
+                Polynomial new_poly(ans);
+
+                operands.push(ans);
+
+
+            }
+            
+
+        }
+    }
+    cout<<exp<<"=";
+    operands.top().output();
 
 }
 

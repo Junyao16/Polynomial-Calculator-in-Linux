@@ -9,5 +9,5 @@ int judge(string exp);
 
 string suffix_exp(string exp);
 
-void value(string exp);
+void value(string exp,string orig);
 
