@@ -9,7 +9,7 @@ private:
     vector <double> factor;
     string name;
 public:
-    
+    void output(Polynomial poly);
     Polynomial plus(Polynomial operand1, Polynomial operand2);
     Polynomial devirate(Polynomial operand);
     Polynomial multiplicate(Polynomial operand1, Polynomial operand2);
