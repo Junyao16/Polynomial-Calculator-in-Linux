@@ -56,7 +56,23 @@ void Polynomial::input(){
     
 
 void Polynomial::output(){//output one specific polynomial
+
     int r = this->factor.size();
+    if(r==0){
+        cout<<"0"<<endl;
+        return;
+    }
+    else{
+        int count = 0;
+        for(int i=0;i<r;i++){
+            if(this->factor[i]==0)count++;
+        }
+        if(count==r){
+            cout<<"0"<<endl;
+            return;
+        }
+    }
+
     for(int i = 0; i < this->factor.size(); i++){
         if(fabs(this->factor[i])<=1e-10){
             continue;
@@ -77,7 +93,7 @@ void Polynomial::output(){//output one specific polynomial
                 if(r-i-1==1){
                     cout<<"+x";
                 }
-                if(r-i-1==0){
+                else if(r-i-1==0){
                     cout<<"+1";
                 }
                 else{

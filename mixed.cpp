@@ -25,8 +25,10 @@ void mixed_control(){
         }
         else{
             string suffix_expr=suffix_exp(exp);
-            cout<<suffix_expr;
+            
             value(suffix_expr,exp);
+
+
             cout<<"SUCCEED! Do you want to continue calculation?(y/n)";
             string tmp;
             cin>>tmp;
