@@ -25,6 +25,7 @@ void mixed_control(){
         }
         else{
             string suffix_expr=suffix_exp(exp);
+            cout<<suffix_expr;
             value(suffix_expr,exp);
             cout<<"SUCCEED! Do you want to continue calculation?(y/n)";
             string tmp;
@@ -47,29 +48,29 @@ int judge(string exp){
    for(int i = 0; i < len; i++){
        if(exp[i]=='('){
            l++;
-           if(i=len-1)return 0;
+           if(i==len-1)return 0;
            if(!((exp[i+1]>='A'&&exp[i+1]<='Z')||(exp[i+1]>='a'&&exp[i+1]<='z')||exp[i+1]=='('||exp[i+1]=='$'))return 0;
        }
        if(exp[i]==')'){
            r++;
-           if(i=len-1)break;
+           if(i==len-1)break;
            else if(!(exp[i+1]==')'||exp[i+1]=='!'||exp[i+1]=='+'||exp[i+1]=='*'))return 0;
        }
        if(exp[i]=='+'||exp[i]=='*'){
-           if(i=len-1)return 0;
+           if(i==len-1)return 0;
            if(!((exp[i+1]>='A'&&exp[i+1]<='Z')||(exp[i+1]>='a'&&exp[i+1]<='z')||exp[i+1]=='('||exp[i+1]=='$'))return 0;
        }
        if(exp[i]=='!'){
-           if(i=len-1)break;
+           if(i==len-1)break;
            else if(!(exp[i+1]=='*'||exp[i+1]=='+'||exp[i+1]==')'))return 0;
        }
        if(exp[i]=='$'){
-           if(i=len-1) return 0;
+           if(i==len-1) return 0;
            if(exp[i+1]!='[')return 0;
            int j = i+2;
            for(;j<len;j++){
                if(exp[j]==']'){
-                   if(!((exp[i+1]>='A'&&exp[i+1]<='Z')||(exp[i+1]>='a'&&exp[i+1]<='z')||exp[j+1]=='(')) return 0;
+                   if(!((exp[j+1]>='A'&&exp[j+1]<='Z')||(exp[j+1]>='a'&&exp[j+1]<='z')||exp[j+1]=='(')) return 0;
                    break;
                }
            }
@@ -77,7 +78,8 @@ int judge(string exp){
            i=j;
        }
        if((exp[i]>='A'&&exp[i]<='Z')||(exp[i]>='a'&&exp[i]<='z')){
-           if(!((exp[i+1]>='A'&&exp[i+1]<='Z')||(exp[i+1]>='a'&&exp[i+1]<='z')||exp[i+1]==')'||exp[i+1]=='!'||exp[i+1]=='+'||exp[i+1]=='*'))return 0;
+           if(i==len-1)break;
+           else if(!((exp[i+1]>='A'&&exp[i+1]<='Z')||(exp[i+1]>='a'&&exp[i+1]<='z')||exp[i+1]==')'||exp[i+1]=='!'||exp[i+1]=='+'||exp[i+1]=='*'))return 0;
        }
    }
    if(l!=r)return 0;
@@ -86,7 +88,7 @@ int judge(string exp){
 
    for(int i=0;i<len;i++){
         if((exp[i]>='A'&&exp[i]<='Z')||(exp[i]>='a'&&exp[i]<='z'))name=name+exp[i];
-        else{
+        else if(name!="\0"){
             int j = 0;
             for(;j<polynomial.size();j++){
                 if(name==polynomial[j].name)break;
@@ -143,6 +145,7 @@ string suffix_exp(string exp){
                 tmp+=exp[j];
                 j++;
             }
+            tmp+=exp[j];
             while(!operate.empty()&&operate.top()!="("&&operate.top()!="+"&&operate.top()!="*"){
                 string tmp;
                 tmp = operate.top();
@@ -156,7 +159,7 @@ string suffix_exp(string exp){
         else if(exp[i]=='!'){
             string tmp;
             tmp+=exp[i];
-            
+
             operate.push(tmp);
         }
         else if(exp[i]==')'){
@@ -169,6 +172,15 @@ string suffix_exp(string exp){
             operate.pop();
         }
 
+
+    }
+    while(!operate.empty()){
+        string tmp;
+        tmp=operate.top();
+        
+        n_exp+=tmp;
+        n_exp+=" ";
+        operate.pop();
     }
     return n_exp;
 }
@@ -192,14 +204,15 @@ void value(string exp ,string orig){
             operand="\0";
 
         }
-        else if(exp[i]=='+'||exp[i]=='*'||exp[i]=='!'||exp[i]=='$'){
+        if(exp[i]=='+'||exp[i]=='*'||exp[i]=='!'||exp[i]=='$'){
+            
             if(exp[i]=='+'){
                 operand1=operands.top();
                 operands.pop();
                 operand2=operands.top();
                 operands.pop();
                 
-                
+
                 Polynomial ans = operand1.plus(operand1,operand2);
                 operands.push(ans);
             }
@@ -291,7 +304,8 @@ void value(string exp ,string orig){
 
         }
     }
-    cout<<exp<<"=";
+
+    cout<<orig<<"=";
     operands.top().output();
 
 }

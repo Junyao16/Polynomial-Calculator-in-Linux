@@ -203,7 +203,7 @@ double Polynomial::value(double x){
     return value;
 
 }
-double Polynomial::integral(double upper_limit, double lower_limit){
+double Polynomial::integral(double lower_limit, double upper_limit){
     Polynomial new_poly;
     int r = this->factor.size();
     double ans;
