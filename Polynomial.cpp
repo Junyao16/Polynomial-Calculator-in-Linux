@@ -15,6 +15,8 @@ Polynomial::Polynomial(double a0){
     this->factor.push_back(a0);
 }
 
+Polynomial::Polynomial(){}
+
 void Polynomial::input(){
     this->factor.clear();
     cout<<"Please input the length of the polynomial:";
@@ -232,4 +234,9 @@ double Polynomial::integral(double lower_limit, double upper_limit){
     ans=new_poly.value(upper_limit)-new_poly.value(lower_limit);
 
     return ans;
+}
+
+Polynomial Polynomial::inverse(){
+    Polynomial tmp;
+    return tmp;
 }

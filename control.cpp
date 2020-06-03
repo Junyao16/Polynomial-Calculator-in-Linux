@@ -50,7 +50,7 @@ int control(){
                 }
             }
             if(i==polynomial.size()){
-                cout<<"There is not a polynomial called"<<cur_name<<"."<<endl:
+                cout<<"There is not a polynomial called"<<cur_name<<"."<<endl;
             }
 	        cout<<"Do you want to continue?(y/n)";
            

@@ -17,7 +17,7 @@ public:
     Polynomial plus(Polynomial operand1, Polynomial operand2);
     Polynomial derivate(Polynomial operand);
     Polynomial multiplicate(Polynomial operand1, Polynomial operand2);
-    Polynomial inverse(Polynomial operand)
+    Polynomial inverse();
     double integral(double lower_limit, double upper_limit);
     double value(double x);
 };
