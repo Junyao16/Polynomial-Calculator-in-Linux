@@ -14,8 +14,8 @@ int control(){
 
     while(1){
     //print the surface
-        cout << "===========================Polynomial Calculator===========================" <<endl;
-        cout << "1.input polynomial 2.mixed calculation 3.display polynomial 4.exit " <<endl;
+        cout << "====================================Polynomial Calculator======================================" <<endl;
+        cout << "1.input polynomial 2.mixed calculation 3.inverse element 4.display polynomial 5.exit " <<endl;
         cout << "Please choose:";
     
         string action;
@@ -38,6 +38,29 @@ int control(){
             mixed_control();
         }
         if(action=="3"){
+            //C
+            C:cout<<"Please input the name of the polynomial you want to know inverse element:";
+            string cur_name;
+            cin>>cur_name;
+            int i = 0;
+            for(;i < polynomial.size();i++){
+                if(polynomial[i].name==cur_name){
+                        polynomial[i].inverse().output();
+                        break;
+                }
+            }
+            if(i==polynomial.size()){
+                cout<<"There is not a polynomial called"<<cur_name<<"."<<endl:
+            }
+	        cout<<"Do you want to continue?(y/n)";
+           
+            string tmp;
+            cin>>tmp;
+            if(tmp=="n")continue;
+            else goto C;
+                        
+        }
+        if(action=="4"){
             //B
             B:cout<<"Please input the name of the polynomial you want to display:";
             string name;
@@ -59,8 +82,11 @@ int control(){
             if(tmp=="n")continue;
             else goto B;
         }
-        if(action=="4"){
+        if(action=="5"){
             return 0;
+        }
+        else {
+            cout<<"Invalid Input"<<endl;
         }
         
     }
