@@ -237,6 +237,18 @@ double Polynomial::integral(double lower_limit, double upper_limit){
 }
 
 Polynomial Polynomial::inverse(){
-    Polynomial tmp;
-    return tmp;
+    Polynomial new_poly;
+    if(this->factor.size()==0) return new_poly;
+    vector<double>b(this->factor.size());
+
+    b[0]=1/this->factor[0];
+    for(int i = 1; i < this->factor.size();i++){
+        b[i]=0;
+        for(int j = 0; j < i; j++){
+            b[i]+=b[j]*((-1)*this->factor[i-j]/this->factor[0]);
+        }
+    }
+
+    new_poly.factor=b;
+    return new_poly;
 }
