@@ -1,5 +1,5 @@
 #include<iostream>
-
+#include<cmath>
 #include<string>
 #include"Polynomial.h"
 #include"mixed.h"
@@ -15,7 +15,7 @@ int control(){
     while(1){
     //print the surface
         cout << "====================================Polynomial Calculator======================================" <<endl;
-        cout << "1.input polynomial 2.mixed calculation 3.inverse element 4.display polynomial 5.exit " <<endl;
+        cout << "1.input polynomial 2.mixed calculation 3.inverse element 4.display polynomial 5.root 6.exit " <<endl;
         cout << "Please choose:";
     
         string action;
@@ -45,8 +45,13 @@ int control(){
             int i = 0;
             for(;i < polynomial.size();i++){
                 if(polynomial[i].name==cur_name){
-                        polynomial[i].inverse().output();
+		            if(polynomial[i].factor.size()==0||fabs(polynomial[i].factor.back()-0)<1e-10){
+                        cout<<"There is no inverse element of "<<cur_name<<"."<<endl;
                         break;
+                    }
+                    cout<<cur_name<<"^-1 = ";
+                    polynomial[i].inverse().output();
+                    break;
                 }
             }
             if(i==polynomial.size()){
@@ -68,6 +73,7 @@ int control(){
             int i = 0;
             for(; i < polynomial.size();i++){
                 if(polynomial[i].name==name){
+                    
                     polynomial[i].output();
                     break;
                 }
@@ -82,7 +88,10 @@ int control(){
             if(tmp=="n")continue;
             else goto B;
         }
-        if(action=="5"){
+
+        if(action == "5"){
+        }
+        if(action=="6"){
             return 0;
         }
         else {

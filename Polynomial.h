@@ -6,9 +6,10 @@ using namespace std;
 
 class Polynomial{
 private:
-    vector <double> factor;
+    
 
 public:
+    vector <double> factor;
     Polynomial();
     Polynomial(double a0);
     string name;
