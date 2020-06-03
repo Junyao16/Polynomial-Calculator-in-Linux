@@ -20,5 +20,6 @@ public:
     Polynomial multiplicate(Polynomial operand1, Polynomial operand2);
     Polynomial inverse();
     double integral(double lower_limit, double upper_limit);
+    double root(Polynomial operand);
     double value(double x);
 };

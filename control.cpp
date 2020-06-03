@@ -14,8 +14,8 @@ int control(){
 
     while(1){
     //print the surface
-        cout << "====================================Polynomial Calculator======================================" <<endl;
-        cout << "1.input polynomial 2.mixed calculation 3.inverse element 4.display polynomial 5.root 6.exit " <<endl;
+        cout << "===========================================Polynomial Calculator============================================" <<endl;
+        cout << "1.input polynomial 2.mixed calculation 3.inverse element 4.display polynomial 5.get unknown variale 6.exit " <<endl;
         cout << "Please choose:";
     
         string action;
@@ -90,6 +90,29 @@ int control(){
         }
 
         if(action == "5"){
+            //D
+	        D:cout<<"Please input the name of the polynomial:";
+            string cur_name;
+            cin>>cur_name;
+            int i = 0;
+            for(;i < polynomial.size();i++){
+                if(polynomial[i].name==cur_name){
+		    
+                    cout<<"One answer of "<<cur_name<<" is:"<<polynomial[i].root(polynomial[i])<<endl;
+                    
+                    break;
+                }
+            }
+            if(i==polynomial.size()){
+                cout<<"There is not a polynomial called"<<cur_name<<"."<<endl;
+            }
+	        cout<<"Do you want to continue?(y/n)";
+           
+            string tmp;
+            cin>>tmp;
+            if(tmp=="n")continue;
+            else goto D;
+            
         }
         if(action=="6"){
             return 0;

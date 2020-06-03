@@ -253,3 +253,14 @@ Polynomial Polynomial::inverse(){
     new_poly.factor=b;
     return new_poly;
 }
+
+double Polynomial::root(Polynomial operand){
+    double ans = 0;
+    while(derivate(operand).value(ans)==0){
+        ans++;
+    }
+    while(fabs(this->value(ans))>1e-5){
+        ans = ans - (this->value(ans)/derivate(operand).value(ans));
+    }
+    return ans;
+}
